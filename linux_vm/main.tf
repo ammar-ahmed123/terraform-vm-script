@@ -115,6 +115,16 @@ resource "azurerm_network_interface_security_group_association" "association" {
 #}
 
 # Create (and display) an SSH key
+
+data "azurerm_key_vault_secret" "example" {
+  name         = "virtualmachinename"
+  key_vault_id = "/subscriptions/4a5b5785-dec0-4465-a13b-794c650c26d1/resourceGroups/newusresource/providers/Microsoft.KeyVault/vaults/secretforpipeline"
+}
+
+output "secret_value" {
+  value = data.azurerm_key_vault_secret.example.value
+}
+
 resource "tls_private_key" "example_ssh" {
   algorithm = "RSA"
   rsa_bits  = 4096
@@ -122,7 +132,7 @@ resource "tls_private_key" "example_ssh" {
 
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "linuxvm" {
-  name                  = var.linux_virtual_machine_name
+  name                  = secret_value
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.nic.id]
