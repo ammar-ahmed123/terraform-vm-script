@@ -160,6 +160,18 @@ resource "azurerm_linux_virtual_machine" "linuxvm" {
   #}
 }
 
+#create a terraform tf file
+terraform {
+  backend "azurerm" {
+    resource_group_name   = "kopicloud-tstate-rg"
+    storage_account_name  = "kopicloudtfstate18830"
+    container_name        = "tfstate2"
+    key                   = "tf_state_file"
+  }
+}
+
+#access_key: pAv41ebjoB70mAR4ZEUxkowueVXLf5WE67GKSv+6GPfz2YnUveu7DGjVlGfb/v/dJdj4HNA+v3rRhyJyS20H3g==
+
 
 
 
