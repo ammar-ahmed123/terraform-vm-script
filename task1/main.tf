@@ -25,6 +25,6 @@ resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
 
   tags = {
-    environment = "secret_value"
+    environment = output.secret_value.value
   }
 }
